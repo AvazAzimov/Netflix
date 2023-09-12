@@ -5,6 +5,7 @@ var elSelect = document.querySelector(".js-select");
 
 function movesOur(movie) {
     elList.innerHTML = null;
+    var fragment = document.createDocumentFragment()
     for (const film of movie) {
         function getTime(time) {        
             var hour = Math.floor(time / 60)
@@ -38,7 +39,8 @@ function movesOur(movie) {
         elLink.textContent = "More info";
         
         elItem.append(elImg,elTitle,elRating,elYear,elTime,genreText,elLink);
-        elList.appendChild(elItem);
+        fragment.appendChild(elItem)
+        elList.appendChild(fragment);
         
         //    console.log(elItem);
         
