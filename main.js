@@ -2,6 +2,8 @@ var elList = document.querySelector(".list");
 var elForm = document.querySelector(".js-form");
 var elInput = document.querySelector(".js-input");
 var elSelect = document.querySelector(".js-select");
+var elSelectSort = document.querySelector(".select__sort");
+var elSortYear = document.querySelector(".select__year");
 
 function movesOur(movie) {
     elList.innerHTML = null;
@@ -69,10 +71,77 @@ function selectArr() {
 
 selectArr()
 
+// A-Z Z-A SORT
+
+function sortFunc(resultArr,sortVal) {
+    if (sortVal == "A-Z") {
+        resultArr.sort((a,b) =>{
+            if (a.Title > b.Title) {
+                return 1;
+            }else if (a.Title < b.Title) {
+                return -1;
+            }else {
+                return 0
+            }
+        })
+    }
+    
+    
+    if (sortVal == "Z-A") {
+        resultArr.sort((a,b) =>{
+            if (a.Title > b.Title) {
+                return -1;
+            }else if (a.Title < b.Title) {
+                return 1;
+            }else {
+                return 0
+            }
+        })
+    }
+    if (sortVal == "All") {
+        return 0;
+    }
+    
+};
+
+// YEAR SORT
+
+function sortYearFunc(resultArr,sortYear) {
+    
+    if (sortYear == "Max") {
+        resultArr.sort((a,b) => {
+            if (a.movie_year > b.movie_year) {
+                return 1;
+            }else if (a.movie_year < b.movie_year) {
+                return -1;
+            }else {
+                return 0
+            }
+            
+        })
+    }
+    
+    if (sortYear == "Min") {
+        resultArr.sort((a,b) => {
+            if (a.movie_year > b.movie_year) {
+                return -1;
+            }else if (a.movie_year < b.movie_year) {
+                return 1;
+            }else {
+                return 0
+            }
+        })
+    }
+    if (sortYear == "All") {
+        return 0;
+    }
+    
+};
 
 elForm.addEventListener("submit", function (evt) {
     evt.preventDefault(); 
-    
+    var sortVal  = elSelectSort.value;
+    var sortYear  = elSortYear.value;
     var inputValue = elInput.value;
     var selectVal = elSelect.value;
     var newRegex = new RegExp(inputValue , "gi")
@@ -84,6 +153,8 @@ elForm.addEventListener("submit", function (evt) {
     
     
     if(resultArr.length > 0) {
+        sortYearFunc(resultArr,sortYear)
+        sortFunc(resultArr,sortVal)
         movesOur(resultArr);
     }else {
         elList.textContent = "Not found 404"
